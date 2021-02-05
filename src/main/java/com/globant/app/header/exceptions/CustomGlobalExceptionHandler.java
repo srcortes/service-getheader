@@ -13,9 +13,15 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler {
 	@ExceptionHandler(InternalServerErrorException.class)
-	public ResponseEntity<Object> customHandleNotFound(final Exception ex, WebRequest request) {
+	public ResponseEntity<Object> customHandleError(final Exception ex, WebRequest request) {
 		InternalServerErrorException finEx = (InternalServerErrorException) ex;
 		ApiError apiError = new ApiError(finEx.getStatus(), "Is present errors service", ex.getMessage());
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<Object> customHandleNotFound(final Exception ex, WebRequest request) {
+		NotFoundException finEx = (NotFoundException) ex;
+		ApiError apiError = new ApiError(finEx.getStatus(), "Headers not Found, The Map is empty", ex.getMessage());
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 }
