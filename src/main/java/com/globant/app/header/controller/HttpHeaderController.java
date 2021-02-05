@@ -29,7 +29,7 @@ public class HttpHeaderController {
 	@ApiOperation(notes = "Service is responsable for generate list header request", value = "N/A")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Ok", response = Map.class),
 	@ApiResponse(code = 500, message = "Internal Server Error", response = InternalServerErrorException.class) })
-	@PostMapping(value = "/getListHeader")
+	@GetMapping(value = "/getListHeader")
 	public ManagerApiResponse<Map<String, List<String>>> getHeaders() throws InternalServerErrorException{	
 		return new ManagerApiResponse<>("Succes", String.valueOf(HttpStatus.OK), "OK", httpHeaderService.listHeader());
 	}
@@ -37,7 +37,7 @@ public class HttpHeaderController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Ok", response = Map.class),
 	@ApiResponse(code = 500, message = "Internal Server Error", response = Exception.class),
 	@ApiResponse(code = 404, message = "Internal Server Error", response = NotFoundException.class) })	
-	@GetMapping(value = "/getHeaderByName/{headerNames}")
+	@PostMapping(value = "/getHeaderByName/{headerNames}")
 	public ManagerApiResponse<Map<String, List<String>>> getHeadersByName(@PathVariable List<String>  headerNames) throws Exception{		
 		return new ManagerApiResponse<>("Succes", String.valueOf(HttpStatus.OK), "OK", httpHeaderService.listHeaderByName(headerNames));
 	}
